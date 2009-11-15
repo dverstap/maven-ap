@@ -21,7 +21,7 @@ under the License.
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>org.apache.maven</groupId>
-  <version>2.2.1-RC2-SNAPSHOT</version>
+  <version>2.2.1-ap-1-SNAPSHOT-RC2-SNAPSHOT</version>
   <artifactId>maven-core-it-runner</artifactId>
 
   <name>Integration Test Executor</name>
