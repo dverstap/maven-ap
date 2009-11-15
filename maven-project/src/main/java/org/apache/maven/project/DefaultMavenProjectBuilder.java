@@ -504,10 +504,15 @@ public class DefaultMavenProjectBuilder
         throws ProjectBuildingException
     {
         Model model = readModel( "unknown", projectDescriptor, true );
+        ModelModifier modifier = new ModelModifier(getLogger(), model, projectDescriptor);
+        File newPomFile = modifier.execute();
 
         MavenProject project = buildInternal( projectDescriptor.getAbsolutePath(), model, config,
                                               buildArtifactRepositories( getSuperModel() ), projectDescriptor,
                                               true );
+        if (newPomFile != null) {
+            project.setFile(newPomFile);
+        }
 
         if ( checkDistributionManagementStatus )
         {
