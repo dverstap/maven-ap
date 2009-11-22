@@ -52,9 +52,8 @@ public class ModelModifier {
     }
 
     public File execute() {
-        // TODO check groupId prefix
-        if (getGroupId().startsWith("com.github.dverstap")) {
-            System.out.println("GOING TO MODIFY POM FILE: " + pomFile);
+        if (shouldModifyPomFile()) {
+            logger.info("maven-ap will modify: " + pomFile);
 
             String versionPropertyName = getVersionPropertyName();
             String version = System.getProperty(versionPropertyName);
@@ -79,6 +78,19 @@ public class ModelModifier {
         } else {
             return null;
         }
+    }
+
+    private boolean shouldModifyPomFile() {
+        String groupIdPrefixes = System.getProperty("maven-ap.groupIdPrefixes");
+        if (groupIdPrefixes == null) {
+            return false;
+        }
+        for (String prefix : groupIdPrefixes.split(",")) {
+            if (getGroupId().startsWith(prefix)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     private String getVersionPropertyName() {
